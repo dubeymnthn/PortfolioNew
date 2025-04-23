@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manthan Dubey Portfolio</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Portfolio of Manthan Dubey, Full-Stack Developer crafting digital bridges." />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Theme Color & Manifest -->
+  <meta name="theme-color" content="#00ebc7">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Portfolio Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #00ebc7;
+      --secondary: #ff5470;
+      --underline-color: var(--secondary);
+      --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      /* Footer variables removed */
+    }
+
+    body {
+      margin: 0;
+      /* Reduced bottom padding as footer is removed */
+      padding: 2rem 2rem 3rem 2rem;
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+      background: #fff;
+      color: #0f0e17;
+      transition: var(--transition);
+      opacity: 0;
+      animation: fadeIn 0.6s 0.1s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    body.dark {
+      background: #0f0e17;
+      color: #fffffe;
+    }
+
+    /* --- Underline Styling --- */
+    .clickable,
+    #intro a,
+    #contact a,
+    #cookie-notice a {
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    #cookie-notice a {
+        color: #fff;
+        text-decoration-color: var(--primary);
+    }
+    #cookie-notice a:hover {
+        color: var(--primary);
+    }
+
+    .clickable:hover,
+    #intro a:hover,
+    #contact a:hover {
+      color: var(--primary);
+    }
+    /* --- End Underline Styling --- */
+
+
+    .section {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: var(--transition);
+      margin: 1.5rem 0;
+      padding-left: 1.5rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    .section.active {
+      max-height: 40000px;
+      opacity: 1;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      background: rgba(0,235,199,0.05);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    body.dark .section.active {
+        background: rgba(0, 235, 199, 0.1);
+        box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+    }
+
+    #night-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      cursor: pointer;
+      background: none;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 30px;
+      transition: var(--transition);
+      z-index: 1031;
+    }
+
+    #night-toggle:hover {
+      background: var(--primary);
+      color: #0f0e17;
+    }
+    body.dark #night-toggle {
+        color: var(--primary);
+        border-color: var(--primary);
+    }
+    body.dark #night-toggle:hover {
+        background: var(--primary);
+        color: #0f0e17;
+    }
+
+    #intro {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+    }
+
+    #intro p { margin: 1.5rem 0; }
+
+    .highlight {
+      color: var(--secondary);
+      font-weight: 700;
+       text-decoration: none !important;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 1.2rem 0;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    li:before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+    }
+
+    .project-card {
+      background: rgba(255,84,112,0.1);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      transform: translateY(0);
+      transition: var(--transition);
+    }
+    body.dark .project-card {
+        background: rgba(255, 84, 112, 0.15);
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+     body.dark .project-card:hover {
+         box-shadow: 0 8px 16px rgba(255,255,255,0.08);
+     }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: rgba(0,235,199,0.1);
+      transition: var(--transition);
+      text-decoration: none;
+      color: inherit;
+    }
+    body.dark .contact-link {
+        background: rgba(0, 235, 199, 0.15);
+    }
+
+    .contact-link:hover {
+      background: var(--primary);
+      color: #0f0e17;
+    }
+
+    /* Footer CSS Removed */
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      body {
+        /* Adjusted bottom padding */
+        padding: 1rem 1rem 4rem 1rem;
+      }
+      #intro { margin-top: 5rem; }
+      #night-toggle { top: 1rem; right: 1rem; }
+      /* Footer responsive CSS removed */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Portfolio Content Start -->
+ <button id="night-toggle" class="clickable">🌓 Switch Theme</button>
+
+<div id="intro">
+  <p>👋 Hey there, welcome to my little corner of the web.</p>
+  <p>I’m <span id="dubey" class="clickable">Manthan Dubey</span>, a <span class="highlight">Full-Stack Developer</span> who loves turning ideas into working apps.</p>
+</div>
+
+<div id="section-role" class="section">
+  <p>I don't just write code—I <span id="role" class="clickable">build experiences</span>. Whether it’s a reliable backend or a smooth frontend, I aim to make tech that just works.</p>
+</div>
+
+<div id="section-menu" class="section">
+  <ul>
+    <li>
+      <span id="about-link" class="clickable">My Story</span>
+      <div id="about" class="section">
+        <p>I grew up in Lucknow with a love for tech, which led me to a BCA & MCA from VIT Bhopal (Class of '23). I'm passionate about using tech to solve real problems, and here’s what I focus on:</p>
+        <ul>
+          <li>Building fast, scalable web and mobile apps</li>
+          <li>Creating user experiences that feel natural</li>
+          <li>Writing clean, well-structured code</li>
+          <li>Sharing knowledge and growing with others</li>
+        </ul>
+        <p>When I’m not coding, you’ll find me exploring open-source projects, trying out new tech (currently diving into GenAI), or brainstorming ways to make tech more accessible.</p>
+      </div>
+    </li>
+    <li>
+      <span id="skills-link" class="clickable">What I Work With</span>
+      <div id="skills" class="section">
+        <p>I work across the stack, so I can build and ship complete products:</p>
+        <ul>
+          <li><span class="highlight">Frontend:</span> React, AngularJS, Flutter (for mobile)</li>
+          <li><span class="highlight">Backend:</span> Node.js, Express.js</li>
+          <li><span class="highlight">Mobile:</span> Flutter (for Android and iOS)</li>
+          <li><span class="highlight">Databases:</span> MongoDB, Firebase, MySQL</li>
+          <li><span class="highlight">DevOps & Cloud:</span> Docker, AWS (EC2, S3, Cognito), CI/CD pipelines</li>
+          <li><span class="highlight">Monitoring:</span> Prometheus, Grafana, Loki</li>
+          <li><span class="highlight">Other skills:</span> Git, Agile, problem-solving, and solid UX thinking</li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <span id="exp-link" class="clickable">Work Experience</span>
+      <div id="exp" class="section">
+        <div class="project-card">
+          <p><strong>Associate Software Developer</strong>, Karkinos Healthcare, Bangalore (Dec 2022 – Jan 2025)</p>
+          <ul>
+            <li>Worked on OncoForms (Flutter/Vue.js), used by over 50,000 healthcare professionals</li>
+            <li>Built a biometric login system with React/Node.js that sped up logins by 40%</li>
+            <li>Developed a secure PWA for health IDs (Node.js backend)</li>
+            <li>Set up CI/CD pipelines to cut release times from 2 weeks to just 3 days</li>
+            <li>Used tools like Prometheus and Grafana for better performance insights</li>
+            <li>Helped junior devs get up to speed with Flutter and clean code practices</li>
+          </ul>
+        </div>
+        <div class="project-card">
+          <p><strong>Trainee Software Developer</strong>, EduGorilla, Lucknow (Sept 2022 – Dec 2022)</p>
+          <ul>
+            <li>Updated an old test series platform with AngularJS and jQuery</li>
+            <li>Created white-label products, balancing front-end visuals with backend logic</li>
+            <li>Got hands-on experience with full-stack work in an agile team</li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li>
+      <span id="proj-link" class="clickable">Startup Journey</span>
+      <div id="proj" class="section">
+        <div class="project-card">
+          <p><strong>Founder, Sandhara</strong> (2020–2021)</p>
+          <ul>
+            <li>Launched a MERN-based app to connect farmers with buyers directly</li>
+            <li>Partnered with big names like DMart and Spencer’s to deliver fresh produce</li>
+            <li>Learned a ton about designing for users, scaling apps, and running a startup</li>
+            <li>This experience really shaped how I think about building useful tech</li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li>
+      <span id="contact-link" class="clickable">Get in Touch</span>
+      <div id="contact" class="section">
+        <p>I believe every line of code can help build something meaningful.</p>
+        <p>If you’ve got a cool idea, a challenge, or just want to chat tech—let’s talk.</p>
+        <p>
+          <a href="mailto:dubey.manthan11@gmail.com" class="contact-link">
+            <i class="fas fa-envelope"></i>Email
+          </a>
+        </p>
+        <p>
+          <a href="https://github.com/dubeymnthn" target="_blank" class="contact-link">
+            <i class="fab fa-github"></i>GitHub
+          </a>
+        </p>
+        <p>
+          <a href="https://linkedin.com/in/dubeymnthn" target="_blank" class="contact-link">
+            <i class="fab fa-linkedin"></i>LinkedIn
+          </a>
+        </p>
+        <p>Looking forward to what we can build together.</p>
+      </div>
+    </li>
+  </ul>
+</div>
+
+  <!-- Portfolio Content End -->
+
+  <!-- Footer Removed -->
+
+  <!-- IE Notice -->
+  <!--[if IE]><div class="position-fixed bottom-0 w-100 p-2 text-bg-dark d-flex justify-content-between" style="z-index: 1030;"><p class="m-0 align-self-center">Outdated browser detected. Please use a modern browser for a better browsing experience.</p><button type="button" class="btn-close btn-close-white" onClick="this.parentNode.remove()" aria-label="Close"></button></div><![endif]-->
+
+  <!-- Dependencies -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+
+  <!-- Cookie Notice Script (if you use one, make sure its styling/positioning is correct without the footer) -->
+  <!-- Example:
+  <div id="cookie-notice" class="fixed-bottom p-3 bg-dark text-white" style="z-index: 1030;"> ... cookie content ... </div>
+  <script type="text/javascript">
+    (function($){
+      const cookieNotice = $('#cookie-notice');
+      // No footer height calculation needed now
+      $('#i-accept').on('click', function() {
+        cookieNotice.fadeOut();
+        localStorage.setItem('hidecookiebar', '1');
+      });
+      if(localStorage.getItem('hidecookiebar') == '1') {
+        cookieNotice.hide();
+      }
+      // No need to adjust margin-bottom based on footer
+    })(jQuery);
+  </script>
+  -->
+
+  <!-- Portfolio Script -->
+  <script>
+    const toggle = document.getElementById('night-toggle');
+    const body = document.body;
+
+    function applyTheme() {
+        const storedPref = localStorage.getItem('night');
+        const currentHour = new Date().getHours();
+        // Determine if it's currently night time (e.g., 6 PM to 6 AM)
+        const isNightTime = currentHour >= 18 || currentHour < 6;
+
+        let useDarkMode;
+
+        if (storedPref !== null) {
+            // If user has a preference stored, use it
+            useDarkMode = storedPref === 'true';
+        } else {
+            // Otherwise, use automatic detection based on time
+            useDarkMode = isNightTime;
+        }
+
+        if (useDarkMode) {
+            body.classList.add('dark');
+            toggle.textContent = '☀️ Toggle Theme'; // Sun icon for dark mode
+        } else {
+            body.classList.remove('dark');
+            toggle.textContent = '🌓 Toggle Theme'; // Moon icon for light mode
+        }
+    }
+
+    toggle.addEventListener('click', () => {
+      // Toggle the class immediately for visual feedback
+      body.classList.toggle('dark');
+      // Store the *new* preference based on the toggle action
+      localStorage.setItem('night', body.classList.contains('dark'));
+      // Update the button text based on the new state
+      applyTheme();
+    });
+
+    // Apply theme on initial load, respecting stored preference or time
+    applyTheme();
+
+    function toggleSection(linkId, sectionId) {
+      const link = document.getElementById(linkId);
+      const section = document.getElementById(sectionId);
+
+      if (!link || !section) {
+          return; // Exit if elements aren't found
+      }
+
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isActive = section.classList.contains('active');
+        const parentMenu = link.closest('#section-menu ul');
+
+        // Close sibling sections within the same menu list
+        if (parentMenu) {
+            parentMenu.querySelectorAll(':scope > li .section.active').forEach(s => {
+                 if (s !== section) {
+                    //s.classList.remove('active');
+                    const correspondingLinkId = s.id + '-link';
+                    const correspondingLink = document.getElementById(correspondingLinkId);
+                    if (correspondingLink) correspondingLink.classList.remove('highlight');
+                 }
+             });
+        }
+         // Close top-level sections if clicking a top-level trigger
+         else if (linkId === 'dubey' || linkId === 'role') {
+             document.querySelectorAll('#intro + .section.active, #section-role + .section.active').forEach(s => {
+                if (s !== section) s.classList.remove('active');
+             });
+         }
+
+        // Toggle current section
+        section.classList.toggle('active', !isActive);
+        link.classList.toggle('highlight', !isActive);
+
+        // Smooth scroll into view only when opening
+        if (!isActive) {
+          setTimeout(() => {
+            section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 400);
+        }
+      });
+    }
+
+    // Initial setup - Attach listeners
+    toggleSection('dubey', 'section-role');
+    toggleSection('role', 'section-menu');
+    ['about-link','skills-link','exp-link','proj-link','contact-link'].forEach(id => {
+      const sectionId = id.replace('-link','');
+      toggleSection(id, sectionId);
+    });
+  </script>
+
+</body>
+</html>
